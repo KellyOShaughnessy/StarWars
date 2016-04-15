@@ -123,11 +123,10 @@ h1
 {
 	position: absolute;
 	height: 700px;
-	width: 90%;
+	width: 80%;
 	bottom: 70%;
 	top: -38%;
-	left: 50%;
-	margin-left: -9em;
+	left: 10%;
 	font-size: 350%;
 	text-align: justify;
 	overflow: hidden;
