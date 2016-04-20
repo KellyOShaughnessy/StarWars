@@ -1,0 +1,17 @@
+PLANET,TYPE,CLIMATE,DIAMETER (km),POPULATION,FILMS (EP)
+Alderaan,Terrestrial,,,,"III, IV"
+Bespin,Gas Giant,,,,"IV, V"
+Coruscant,Terrestrial,"Artificial, Temperate",,1E+12,"I, II, III, VI"
+Dagobah,Swamp,,,,"V, VI"
+Endor,Terrestrial,,,,VI
+Felucia,Terrestrial,,,,III
+Geonosis,Terrestrial,Arid,,"100,000,000,000",II
+Hoth,Ice Giant,Frigid,7200,10,V
+Kamino,Oceanic,,,,"II, III"
+Kashyyyk,Tropical,Temperate,,,III
+Mustafar,Terrestrial,Searing,,20000,"II, III"
+Naboo,Terrestrial,Temperate,,,"I, II, III, VI"
+Nal Hutta,Swamp,Hot,,,II
+Tatooine,Terrestrial,"Hot, Arid",10465,200000,"I, II, III, IV, VI"
+Utapau,Terrestrial,Temperate,12900,,III
+Yavin,Gas Giant,Uninhabitable,,,IV
