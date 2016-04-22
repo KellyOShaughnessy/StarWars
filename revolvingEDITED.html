@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <!-- 	<link rel="stylesheet" href="main.css">
+ -->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <title> CS 3300 Project 2 </title>
+  <style>
+  svg {
+    background-color: #000;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="svg" />
+  <script>
+
+  if (!String.prototype.format) {
+	  String.prototype.format = function() {
+	    var args = arguments;
+	    return this.replace(/{(\d+)}/g, function(match, number) { 
+	      return typeof args[number] != 'undefined'
+	        ? args[number]
+	        : match
+	      ;
+	    });
+	  };
+	}
+
+  var height = 1000,
+    width = 1200, //EDIT: 1000
+    padding = 50;
+
+  var svg = d3.select("#svg").append("svg").attr("width", width).attr("height", height);
+
+  var mid = {
+    x: width / 2,
+    y: height / 2
+  }
+  var t0 = Date.now();
+  var planets = [{
+    orbitSpeed: 0.5,
+    orbit: 300,
+    radius: 50, //EDIT: 25
+    delta: Date.now() - t0,
+    hovering: false,
+    clicked: false,
+    opacity: 1
+  }];
+
+  
+   var planetInfo = svg.append("text").attr("class", "info").attr("x", width/2)
+	 .attr("y", height/4)
+	 .text("#StarWars")
+	  .attr("fill", "white")
+	  .attr("stroke-width", 12)
+	  .style("visibility", "hidden");
+  
+  
+  svg.selectAll(".planet").data(planets).enter()
+  	.append("circle")
+    .attr("class", "planet")
+		.attr("cx", function(p) { return mid.x + p.orbit; })
+		.attr("cy", mid.y)
+		.attr("r", function(p) { return p.radius; })
+		.attr("fill", "blue")
+    .attr("opacity", function(p) {return p.opacity;} )
+		.on("mouseover", function(p) {
+			p.hovering = true;
+		})
+		.on("mouseout", function(p) {
+			p.hovering = false;
+		})
+    .on("click", function(p) {
+      p.clicked = p.clicked ? false : true;
+    });
+
+  d3.timer(function() {
+    var circles = svg.select(".planet");
+    //stops rotating on hover or click
+    circles.attr("transform", function(d) {
+    	d.delta += (!d.hovering && !d.clicked) ? d.orbitSpeed : 0;
+      return d.clicked? "translate(-800, 50)" :"rotate({0},{1},{2})".format(d.delta, mid.x, mid.y);
+    })
+    .attr("opacity", function(d) {
+      return (!d.hovering && !d.clicked) ? d.opacity : 0.8 ;
+    })
+    .transition().attr("r", function(d) {
+      //get multiplying factor
+	  if(d.clicked){planetInfo.style("visibility", "visible")}
+	  else{planetInfo.style("visibility", "hidden");}
+      return !d.clicked ? d.radius : width/4 ;
+    }).duration(75)
+
+	;
+  })
+
+	
+	
+    //TODO: transition to center of page?
+    //TODO: add linking text
+  </script>
+
+  
+</body>
+
+</html>
