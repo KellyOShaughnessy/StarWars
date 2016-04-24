@@ -1,40 +1,23 @@
-/* 
-** ALL CREDIT GOES TO 
-** Craig Buckler
-** http://www.sitepoint.com/css3-starwars-scrolling-text/
-*/
+/*Kelly O'Shaughnessy
+Adi Bodas
+Ernes Railey*/
 
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
-
-* { padding: 0; margin: 0; }
-
 body, html
 {
-  width: 100%;
-  height: 100%;
-  font-family: "Droid Sans", arial, verdana, sans-serif;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	font-family: "Droid Sans", arial, verdana, sans-serif;
 	font-weight: 700;
 	color: #ff6;
-	background-color: black;
 	overflow: hidden;
 }
 
-p#start
-{
-	position: relative;
-	width: 16em;
-	font-size: 200%;
-	font-weight: 400;
-	margin: 10% auto;
-	color: purple;
-	opacity: 0;
-	z-index: 1;
-	-webkit-animation: intro 3s ease-out;
-	-moz-animation: intro 3s ease-out;
-	-ms-animation: intro 3s ease-out;
-	-o-animation: intro 3s ease-out;
-	animation: intro 3s ease-out;
-}
+/*SCROLLING TEXT*/
+
+/* Credit to Craig Buckler for scrolling text
+** http://www.sitepoint.com/css3-starwars-scrolling-text/ */
 
 @-webkit-keyframes intro {
 	0% { opacity: 1; }
@@ -142,22 +125,6 @@ h1
 	transform: perspective(300px) rotateX(25deg);
 }
 
-#titles:after
-{
-	position: absolute;
-	content: ' ';
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 60%;
-	background-image: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
-	background-image: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
-	background-image: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
-	background-image: -o-linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
-	background-image: linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
-	pointer-events: none;
-}
-
 #titles p
 {
 	text-align: justify;
@@ -211,3 +178,63 @@ h1
 	0% { top: 100%; }
 	100% { top: -170%; }
 }
+
+/*TWINKLING STARS*/
+
+.circle_big {
+	border-radius: 50%;
+	width: 6px;
+	height: 6px; 
+	background: #ffffe6;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	z-index: 2;
+	animation: twinkle 8s linear 0s infinite normal;
+	-webkit-animation: twinkle 8s linear 0s infinite normal;
+	-moz-animation: twinkle 8s linear 0s infinite normal;
+	-ms-animation: twinkle 8s linear 0s infinite normal;
+	-o-animation: twinkle 8s linear 0s infinite normal;
+}
+.circle_small {
+	border-radius: 50%;
+	width: 2px;
+	height: 2px; 
+	background: #ffffcc;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	z-index: 2;
+}
+.circle_med {
+	border-radius: 50%;
+	width: 4px;
+	height: 4px; 
+	background: #ffffe6;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	animation: twinkle 4s linear 0s infinite normal;
+	-webkit-animation: twinkle 4s linear 0s infinite normal;
+	-moz-animation: twinkle 4s linear 0s infinite normal;
+	-ms-animation: twinkle 4s linear 0s infinite normal;
+	-o-animation: twinkle 4s linear 0s infinite normal;
+	}
+
+	/*css3 keyframes for glittering effect*/
+@-webkit-keyframes twinkle {
+	0%   { -webkit-transform: scale(1.0); opacity: 1; }
+	25%  { -webkit-transform: scale(0.5); opacity: 0; }
+	50%  { -webkit-transform: scale(1.0); opacity: 1; }
+	75%  { -webkit-transform: scale(0.5); opacity: 0; }
+	100% { -webkit-transform: scale(1.0); opacity: 1; }
+}
+@-moz-keyframes twinkle {
+	0%   { -moz-transform: scale(1.0); opacity: 1; }
+	25%  { -moz-transform: scale(0.5); opacity: 0; }
+	50%  { -moz-transform: scale(1.0); opacity: 1; }
+	75%  { -moz-transform: scale(0.5); opacity: 0; }
+	100% { -moz-transform: scale(1.0); opacity: 1; }
+}
+
+
