@@ -1,0 +1,151 @@
+
+<head>
+  <!-- 	<link rel="stylesheet" href="main.css">
+ -->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <title> CS 3300 Project 2 </title>
+  <style>
+  svg {
+    background-color: #000;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="svg"></div>
+  <script>
+	
+	
+  if (!String.prototype.format) {
+	  String.prototype.format = function() {
+	    var args = arguments;
+	    return this.replace(/{(\d+)}/g, function(match, number) { 
+	      return typeof args[number] != 'undefined'
+	        ? args[number]
+	        : match
+	      ;
+	    });
+	  };
+	}
+    
+    var circle = [];
+    
+    var svg = d3.select("#svg").append("svg")
+              .attr("height", 1000)
+              .attr("width", 1300)
+              .attr("fill", "black");
+
+    
+	var t0 = Date.now();
+	 
+    var planets = [];
+
+    var label = svg.append("text");
+	
+	var width = 1300;
+	 
+	var height = 1000;
+	
+	var mid = {
+	   x: width/2,
+	   y: height/2
+	};
+	
+	
+	
+	var planetInfo = svg.append("text").attr("class", "info").attr("x", width/2)
+	 .attr("y", height/4)
+	 .text("#StarWars")
+	  .attr("fill", "white")
+	  .attr("stroke-width", 12)
+	  .style("visibility", "hidden");
+  
+    
+    d3.csv("planet_info.csv", function(RandCSV){
+       
+		var curr_orbit = 300
+        
+    	RandCSV.forEach(function (planetRow){
+          if (planetRow["PLANET"] != null){         
+			curr_orbit += 100;
+			planets.push({
+			  orbitSpeed: 0.3,
+			  orbit: curr_orbit,
+			  radius: 100, //EDIT: 25
+			  delta: Date.now() - t0,
+			  hovering: false,
+			  clicked: false,
+			  opacity: 1,
+			  //offset: planetRow["OFFSET"],
+			  id: planetRow["PLANET"],
+			  url: planetRow["IMAGE"]
+			  });
+				  
+        }
+      })
+		
+		svg.selectAll("image").data(planets)
+			  .enter()
+			  .append("image")
+              .attr("class", "planet")
+              .attr("id", planets.id)
+              //.attr("r", 20)  //radius is scaled populationSize
+			  .attr("height", function(d){return d.radius;})
+			  .attr("width", function(d){return d.radius;})
+              .attr("x", function(d){
+				return (mid.x + d.orbit/*+ d.offset*/);
+			  })
+              .attr("y", function (d){
+						  return (mid.y /*+ d.offset*/);
+			  })
+			  .attr("opacity", function(d){return d.opacity;})
+			  .attr("xlink:href", function(d){
+				return ("img/"+d.url);
+				})
+              .on("mouseover", function(d){
+				  d.hovering = true;
+				
+				//add labels
+			  
+                })
+              .on("mouseout", function(d){
+				
+				  d.hovering = false;
+				  svg.selectAll(".label").attr("visibility", "hidden");
+                  })
+			  .on("click", function(d){
+				  d.clicked = d.clicked? false: true;
+				});
+			  
+	d3.timer(function() {
+	  
+	  var circles = svg.selectAll(".planet");
+	  //stops rotating on hover or click
+	  circles.attr("transform", function(d) {
+      d.delta += (!d.hovering && !d.clicked) ? d.orbitSpeed : 0;
+      return d.clicked? "translate(-950, -350)" :"rotate({0},{1},{2})".format(d.delta, mid.x, mid.y);
+    })
+    .attr("opacity", function(d) {
+      return (!d.hovering && !d.clicked) ? d.opacity : 0.8 ;
+    })
+    .transition().attr("height", function(d) {
+      //get multiplying factor
+	  if(d.clicked){planetInfo.style("visibility", "visible")}
+	  else{planetInfo.style("visibility", "hidden");}
+				return !d.clicked ? d.radius : height/2.5 ;
+			})
+				.attr("width", function(d){
+				 return !d.clicked ? d.radius : width/2.5;
+				})
+				.duration(100);
+  })
+    });
+
+    /*don't hide and add each one, whichever
+     *one is clicked is the one that will pop up
+     *in the #StarWars space
+    */
+
+  </script>
+</body>
+</html>
