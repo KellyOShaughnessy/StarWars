@@ -14,7 +14,7 @@ body, html
 	overflow: hidden;
 }
 
-/*SCROLLING TEXT*/
+/*****************SCROLLING TEXT*****************/
 
 /* Credit to Craig Buckler for scrolling text
 ** http://www.sitepoint.com/css3-starwars-scrolling-text/ */
@@ -146,11 +146,11 @@ h1
 {
 	position: absolute;
 	top: 100%;
-	-webkit-animation: scroll 50s linear 4s infinite;
-	-moz-animation: scroll 50s linear 4s infinite;
-	-ms-animation: scroll 50s linear 4s infinite;
-	-o-animation: scroll 50s linear 4s infinite;
-	animation: scroll 50s linear 4s infinite;
+	-webkit-animation: scroll 30s linear 4s infinite;
+	-moz-animation: scroll 30s linear 4s infinite;
+	-ms-animation: scroll 30s linear 4s infinite;
+	-o-animation: scroll 30s linear 4s infinite;
+	animation: scroll 30s linear 4s infinite;
 }
 
 /* animation */
@@ -179,7 +179,7 @@ h1
 	100% { top: -170%; }
 }
 
-/*TWINKLING STARS*/
+/*****************TWINKLING STARS*****************/
 
 .circle_big {
 	border-radius: 50%;
