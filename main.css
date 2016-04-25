@@ -21,7 +21,8 @@ h2 { color: white; }
 
 .escape-but {
 	position: relative;
-	top: 500px;
+	top: 10px;
+	left: 30px;
 }
 
 .dropdown-but, .escape-but {
