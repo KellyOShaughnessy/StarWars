@@ -23,8 +23,6 @@
     };
   }
 
-  var loop = false;
-
   var PLANET_STATE = {
   	ORBIT : 0,
   	HOVER : 1,
@@ -32,9 +30,10 @@
   }
 
   var t0 = Date.now(),
-    	planets = [];
- 	 		width = 1000;
-  		height = 1000;
+    	planets = [],
+ 	 		width = 2000,
+  		height = 2000,
+  		padding = 50,
   		mid = {
 	      x: width / 2,
 	      y: height / 2
@@ -43,8 +42,8 @@
     	selected = null;
 
   var svg = d3.select("#svg").append("svg")
-    .attr("height", 1000)
-    .attr("width", 1300)
+    .attr("height", height)
+    .attr("width", width)
     .attr("fill", "black");
 
   var planetInfo = svg.append("text").attr("class", "info").attr("x", width / 2)
@@ -57,19 +56,17 @@
 
   d3.csv("planet_info.csv", function(RandCSV) {
 
-    var curr_orbit = 25
-
     var orbitSpeedScale = d3.scale.linear().domain([0,1]).range([.2,.7]);
-    		orbitScale 			= d3.scale.linear().domain([0,1]).range([.2,.7])
+    		orbitScale 			= d3.scale.pow().domain([0,1]).range([50, 750])
 
     RandCSV.forEach(function(planetRow, i) {
       if (planetRow["PLANET"] != null) {
-        curr_orbit += 50;
+        var orbit = orbitScale(Math.random());
         planets.push({
           orbitSpeed: orbitSpeedScale(Math.random()),
-          orbit: curr_orbit,
-          radius: 50, //EDIT: 25
-          delta: curr_orbit,
+          orbit: orbit,
+          radius: 100, //EDIT: 25
+          delta: orbit * 50,
           state: PLANET_STATE.ORBIT,
           opacity: 1,
           //offset: planetRow["OFFSET"],
@@ -79,6 +76,12 @@
 
       }
     })
+
+    var planetName = svg.append("text")
+    	.attr("x", padding).attr("y", padding)
+    	.style("fill", "white")
+    	.style("font-size", "50")
+    	.attr("visibility", "hidden");
 
     svg.selectAll("image").data(planets)
       .enter()
@@ -111,25 +114,28 @@
         					d.state = PLANET_STATE.SELECT :
         					d.state = PLANET_STATE.HOVER;
 
-        //add labels
+       	planetName.attr("visibility", "visible").text(d.id);
 
       })
       .on("mouseout", function(d) {
         d.state = d.state == PLANET_STATE.SELECT ? 
         					d.state = PLANET_STATE.SELECT :
         					d.state = PLANET_STATE.ORBIT;
-        svg.selectAll(".label").attr("visibility", "hidden");
+        planetName.attr("visibility", "hidden").text("");
       })
       .on("click", function(d) {
-      	if (selected) { selected.state = PLANET_STATE.ORBIT; }
-      	selected = 
-        d.state = d.state == PLANET_STATE.SELECT ? 
-        					d.state = PLANET_STATE.ORBIT :
-        					d.state = PLANET_STATE.SELECT;      
+      	if (d.state == PLANET_STATE.SELECT) {
+    			selected = null;
+    			d.state = PLANET_STATE.ORBIT;
+      	} else {
+    		  if (selected) 
+    		 		selected.state = PLANET_STATE.ORBIT;
+    		 	selected = d;
+    		 	d.state = PLANET_STATE.SELECT;
+      	}     
       });
 
     d3.timer(function() {
-    	if (loop) return true;
       var circles = svg.selectAll(".planet");
       //stops rotating on hover or click
       circles.attr("transform", function(d) {
@@ -137,7 +143,14 @@
           return d.state == PLANET_STATE.SELECT ? "rotate({0},{1},{2})".format(d.delta, mid.x, mid.y) : "rotate({0},{1},{2})".format(d.delta, mid.x, mid.y);
         })
         .attr("opacity", function(d) {
-          return d.state == PLANET_STATE.ORBIT ? d.opacity : 0.8;
+          switch(d.state) {
+          	case PLANET_STATE.ORBIT:
+          		return selected == null ? 1 : .3;
+          	case PLANET_STATE.HOVER:
+          		return selected == null ? .8 : .3;
+          	case PLANET_STATE.SELECT:
+          		return 1;
+          }
         })
         .transition().attr("height", function(d) {
           //get multiplying factor
@@ -152,12 +165,12 @@
           return d.state != PLANET_STATE.SELECT ? d.radius : width / 2.5;
         })
         .attr("x", function(d) {
-        	return d.state != PLANET_STATE.SELECT ? mid.x + d.orbit : mid.x - 200;
+        	return d.state != PLANET_STATE.SELECT ? mid.x + d.orbit : mid.x - width / 5;
         })        
         .attr("y", function(d) {
-        	return d.state != PLANET_STATE.SELECT ? mid.y : mid.y - 200;
+        	return d.state != PLANET_STATE.SELECT ? mid.y : mid.y - height / 5;
         })
-        .duration(100);
+        .duration(130);
     });
 
     console.log(timer);
