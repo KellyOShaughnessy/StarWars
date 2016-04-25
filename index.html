@@ -6,40 +6,8 @@
 </head>
 <body>
 
-<!-- Twinkling Background -->
-<script>
-body=document.body;
-loop={
-	//initilizeing stars
-	start:function(){
-		for (var i=0; i <= 300; i++) {
-			var star=this.newStar();
-			star.style.top=Math.random()*100+"%";
-			star.style.left=Math.random()*100+"%";
-			star.style.webkitAnimationDelay=Math.random()+"s";
-			star.style.mozAnimationDelay=Math.random()+"s";
-			body.appendChild(star);
-		};
-	},
-
-	//creates html circle dom for star
-	newStar:function(){
-		var d = document.createElement('div');
-		var rand = Math.random() * 10;
-		if (rand < 4) {
-			d.innerHTML = '<figure class="circle_med"></figure>';
-		}
-		else if (rand < 8 && rand > 4) {
-		d.innerHTML = '<figure class="circle_small"></figure>';
- 		}
- 		else {
-		d.innerHTML = '<figure class="circle_big"></figure>';
- 		}
- 		return d.firstChild;
-	}
-};
-loop.start();
-</script>
+<!-- Twinkling -->
+<script type="text/javascript" src="main.js"></script>
 
 <!-- StarWars theme song -->
 <audio controls autoplay loop>
@@ -50,7 +18,6 @@ loop.start();
 <h1>STAR WARS</h1>
 <div id="titles">
   <div id="titlecontent">
-
     <p class="center">Episode II<br /></p>
 
     <p>Kelly, Adi, and Ernes set out to make a dope interactive vizualization, and little did they know that the force was lurking around them in the depths of Olin Basement.</p>
@@ -58,10 +25,14 @@ loop.start();
     <p>They were mindlessly searching databases for inspiration when they landed in the strange world of SWAPI - the Star Wars API. That's when everything changed.</p>
 
     <p class="center">#StarWars</p>
-
   </div>
 </div>
 
-</body>
+<!-- Escape Button -->
 
+<div class="escape">
+	<button class="escape-but" type="button"><a href="eps.html">Start your journey</a></button>
+</div>
+
+</body>
 </html>
