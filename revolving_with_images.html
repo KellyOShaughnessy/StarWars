@@ -1,6 +1,6 @@
 <head>
-  <!-- 	<link rel="stylesheet" href="main.css">
- -->
+  	<link rel="stylesheet" href="main.css">
+
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <title> CS 3300 Project 2 </title>
   <style>
@@ -60,7 +60,7 @@
     		orbitScale 			= d3.scale.pow().domain([0,1]).range([50, 750])
 
     RandCSV.forEach(function(planetRow, i) {
-      if (planetRow["PLANET"] != null) {
+      if (planetRow["PLANET"] != null && planetRow["PLANET"] != "Earth") {
         var orbit = orbitScale(Math.random());
         planets.push({
           orbitSpeed: orbitSpeedScale(Math.random()),
