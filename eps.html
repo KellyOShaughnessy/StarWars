@@ -9,7 +9,11 @@
 <!-- Twinkling -->
 <script type="text/javascript" src="main.js"></script>
 
-<!-- Dropdown -->
+<script>
+graphics(0);
+</script>
+
+<!-- Dropdown Filter -->
 <div id="dropdwn" class="filter">
 	<h2>Episodes</h2>
 	<p>Filter planets based on their appearance in Episodes:</p>
@@ -27,25 +31,11 @@
   	</div>
  </div>
 
-<script>
- function drop() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
+<!-- Back to Homepage Button -->
+<br>
+ <div class="home">
+	<button class="home-but" type="button"><a href="index.html">Back to homepage</a></button>
+</div>
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropdown-but')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
- </script>
 </body>
 </html>
