@@ -72,7 +72,7 @@ function graphics(ep) {
 		        dataset.planets.push({
 		        	id: planetRow["PLANET"],
 		        	type: planetRow["TYPE"],
-		        	diameter: planetRow["DIAMETER (km)"],
+		        	diameter: planetRow["DIAMETER"],
 		        	pop: planetRow["POPULATION"],
 		        	films: planetRow["FILMS (EP)"],
 		        	url: planetRow["IMAGE"]
@@ -102,6 +102,7 @@ function graphics(ep) {
 	    	if (d < 12742) { d_counts[0] ++;}
 	    	if (d > 12742) { d_counts[1] ++;}
 	    }
+	    console.log(dataset.planets);
 
 	//Breakdown of planet terrain type
 	var width = 250,

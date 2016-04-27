@@ -11,9 +11,9 @@ body, html
 	font-family: "Droid Sans", arial, verdana, sans-serif;
 	font-weight: 700;
 	color: #ff6;
-	overflow: visible;
+	overflow: scroll;
+	margin: 0;
 }
-svg {overflow: visible;}
 
 h2 { color: white; }
 
@@ -234,8 +234,8 @@ h1
 	background: #ffffe6;
 	display: block;
 	position: absolute;
-	overflow: hidden;
 	z-index: 2;
+	overflow: hidden;
 	animation: twinkle 8s linear 0s infinite normal;
 	-webkit-animation: twinkle 8s linear 0s infinite normal;
 	-moz-animation: twinkle 8s linear 0s infinite normal;
@@ -249,8 +249,8 @@ h1
 	background: #ffffcc;
 	display: block;
 	position: absolute;
-	overflow: hidden;
 	z-index: 2;
+	overflow: hidden;
 }
 .circle_med {
 	border-radius: 50%;
