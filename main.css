@@ -12,13 +12,17 @@ body, html
 	font-weight: 700;
 	color: #ff6;
 	overflow: scroll;
-	margin: 0;
+	margin: 5;
 }
 
-h2 { color: white; }
+h2 { 
+	color: white; 
+	font-size: 42;
+}
 
 /*****************DROPDOWN MENU & BUTTONS*****************/
-#dropdwn p { color: white; }
+
+.home, .dropdown { display: inline-block;}
 
 .escape-but {
 	position: relative;
@@ -26,36 +30,40 @@ h2 { color: white; }
 	left: 30px;
 }
 
-.dropdown-but, .escape-but, .home-but {
+.dropdown-but, .escape-but , .home-but  {
 	background-color: white;
-	color: black;
-	padding: 18px;
+	padding: 12px 12px;
 	border: none;
 	cursor: pointer;
-	text-decoration: none
 }
 
-.dropdown-but:hover, .dropdown-but:focus, .escape-but:hover, .home-but:hover {
-	background-color: yellow;
-}
-
-.dropdown {
-	position: relative;
-	display: inline-block;
+.home-but a, .escape-but a, .dropdown-but a {
+	text-decoration: none;
+	font-size: 12;
+	color: black;
 }
 
 .dropdown-content {
 	display: none;
 	position: absolute;
 	background-color: #ccc;
+	margin: 5;
 }
 
-.dropdown-content a, .escape-but a, .home-but a {
+.dropdown-content a{
 	display: block;
 	color: black;
 	text-decoration: none;
-	font-size: 14;
+	font-size: 12;
 	padding: 10px 10px;
+}
+
+.dropdown-but:hover, .dropdown-but:focus, .escape-but:hover, .home-but:hover {
+	background-color: yellow;
+}
+
+.dropdown, .home {
+	position: relative;
 }
 
 .show { display:block; }
@@ -287,7 +295,8 @@ h1
 
 .graphics{
 	position: absolute;
-	right: 0;
-	top: 0;
+	/*display: inline-block;*/
+	right: 1000;
+	top: 1000;
 }
 

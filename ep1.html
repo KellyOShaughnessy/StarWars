@@ -5,36 +5,37 @@
 	<title> Ep I </title>
 </head>
 <body>
+
 <!-- Twinkling -->
 <script type="text/javascript" src="main.js"></script>
 
-<script>
-graphics("I");
-</script>
+<div id = "graphics">
+	<script>
+	graphics("I");
+	</script>
+</div>
 
-<!-- Dropdown -->
-<div id="dropdwn" class="filter">
-	<h2>Episodes</h2>
-	<p>Filter planets based on their appearance in Episodes:</p>
-	<div class="dropdown">
-		<button onclick = "drop()" class="dropdown-but" type="button" data-toggle="dropdown">All Episodes <span class="caret"></span></button>
-		<div id ="myDropdown" class="dropdown-content">
-			<a href="eps.html">All Episodes</a>
-	     	<a href="ep1.html">Episode I</a>
-	     	<a href="ep2.html">Episode II</a>
-	     	<a href="ep3.html">Episode III</a>
-	     	<a href="ep4.html">Episode IV</a>
-	     	<a href="ep5.html">Episode V</a>
-	     	<a href="ep6.html">Episode VI</a>
-	    </div>
-  	</div>
- </div>
+<u><h2>Episode I</h2></u>
+<p>Filter planets based on their appearance in Episodes:</p>
 
- <!-- Back to Homepage Button -->
-<br>
- <div class="home">
+<!-- Episode Dropdown -->
+<div class="dropdown">
+	<button onclick = "drop()" class="dropdown-but" type="button" data-toggle="dropdown">Episode Filter <span class="caret">&#65516;</span></button>
+	<div id ="myDropdown" class="dropdown-content">
+		<a href="eps.html">Episodes I-VI</a>
+     	<a href="ep1.html">Episode I</a>
+     	<a href="ep2.html">Episode II</a>
+     	<a href="ep3.html">Episode III</a>
+     	<a href="ep4.html">Episode IV</a>
+     	<a href="ep5.html">Episode V</a>
+     	<a href="ep6.html">Episode VI</a>
+    </div>
+</div>
+<!-- Back to Homepage Button -->
+<div class="home">
 	<button class="home-but" type="button"><a href="index.html">Back to homepage</a></button>
 </div>
+<br>
 
 </body>
 </html>
