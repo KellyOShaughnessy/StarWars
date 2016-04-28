@@ -93,24 +93,24 @@ function graphics(ep) {
 	    }
 	    //Get population and diameter of planets
 	    for (var i=0; i<dataset.planets.length; i++) {
+	    	var id = dataset.planets[i].id;
 	    	var d = dataset.planets[i].diameter;
 	    	var p = dataset.planets[i].pop;
 
-	    	pops.push(p);
+	    	pops.push({id: id, pop:p});
 
 	    	diams.push(d);
 	    	if (d < 12742) { d_counts[0] ++;}
 	    	if (d > 12742) { d_counts[1] ++;}
 	    }
+	//Two circle graphics
 
-	//Breakdown of planet terrain type
-	var width = 250,
-	    height = 280,
+	var width = 500,
+	    height = 550,
 	    padding = 0,
-	    radius = Math.min(width-padding, height-padding) / 2;
+	    radius = Math.min((width-padding)/2, (height-padding)/2) / 2;
 
-	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", 
-	"#0000cc", "blue", "red","black","orange","yellow","green","purple","pink"];
+	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", "#0000cc"];
 
 	var pie = d3.layout.pie()
 	    .sort(null);
@@ -122,53 +122,40 @@ function graphics(ep) {
 	var svg = d3.select("body").append("svg")
 	    .attr("width", width)
 	    .attr("height", height)
-	    .append("g")
-	    .attr("transform", "translate(" + (width-padding) / 2 + "," + (height-padding) / 2 + ")");
+	    .attr("align","center");
 
-	var path = svg.selectAll("path")
+	var svg_terrain = svg.append("g")
+					.attr("class","terrain")
+					.attr("transform", "translate(" + (width-padding) / 2 + "," + radius + ")");
+	var svg_diam_earth = svg.append("g")
+					.attr("class","earth")
+					.attr("transform", "translate(" + (width-padding) / 2 + "," + ((height-padding) / 2 + radius) + ")");
+
+	//Breakdown of planet terrain type
+	var path = svg_terrain.selectAll("path")
 	    .data(pie(type_counts))
 	  	.enter().append("path")
 	    .attr("fill", function(d, i) { return color[i]; })
 	    .attr("d", arc);
 
-	svg.append("text")
+	svg_terrain.append("text")
 		.attr("x", 0)
-		.attr("y", (height-10)/2)
+		.attr("y", radius)
 		.attr("fill", "yellow")
 		.attr("font-size","10")
 		.text("planet terrain of planets by %")
 		.attr("text-anchor", "middle");
 
 	//smaller or bigger than Earth
-	var width = 250,
-	    height = 280,
-	    padding = 0,
-	    radius = Math.min(width-padding, height-padding) / 2;
-
-	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", "#0000cc"];
-
-	var pie = d3.layout.pie()
-	    .sort(null);
-
-	var arc = d3.svg.arc()
-	    .innerRadius(radius - 60)
-	    .outerRadius(radius - 10);
-
-	var svg2 = d3.select("body").append("svg")
-	    .attr("width", width)
-	    .attr("height", height)
-	    .append("g")
-	    .attr("transform", "translate(" + (width-padding) / 2 + "," + (height-padding) / 2 + ")");
-
-	var path = svg2.selectAll("path")
+	var path = svg_diam_earth.selectAll("path")
 	    .data(pie(d_counts))
 	  	.enter().append("path")
 	    .attr("fill", function(d, i) { return color[i]; })
 	    .attr("d", arc);
 
-	svg2.append("text")
+	svg_diam_earth.append("text")
 		.attr("x", 0)
-		.attr("y", (height-10)/2)
+		.attr("y", radius)
 		.attr("fill", "yellow")
 		.text("% planets smaller/larger than earth")
 		.attr("font-size","10")
@@ -176,40 +163,79 @@ function graphics(ep) {
 
 	//planet population comparison
 
-	var color = ["#26518c", "#5f8fd3", "#c3d5ef",
+	var color2 = ["#26518c", "#5f8fd3", "#c3d5ef",
 				"#a93f0a", "#f4783e","#fbcdb7", 
 				"#298941", "#4fc96e", "#b0e8be",
 				"#3e3e75", "#7979b9", "#cdcde5",
 				"#a11250", "#eb478e", "#f7bbd6",
 				"#595959", "#999999", "#d9d9d9"];
 
-	var width = 600, 
+	var width = 800, 
 		height = 650,
 		padding = 0;
 
-	var scale = d3.scale.log().domain([1,d3.max(pops)]).range([1,240]);
+	//extract population data and sort it
+	pops.sort(function(a, b){return b.pop-a.pop});
+	var data = [];
+	pops.forEach(function(elmt){
+		data.push(elmt.pop);
+	});
 
-	pops.sort(function(a, b){return b-a});
+	var scale = d3.scale.log().domain([1,1000000000000])
+								.range([1,220]);
+
+	console.log(data);
 
 	var svg3 = d3.select("body").append("svg")
 	    .attr("width", width)
 	    .attr("height", height)
 	    .append("g");
 
-	svg3.selectAll('.circles').data(pops).enter().append('circle')
+	var circles = svg3.selectAll('.circles')
+		.data(data)
+		.enter().append('circle')
 		.attr('r', function(d)  { return scale(d);})
 		.attr("cy", (height-padding)/2)
 		.attr("cx", function(d,i) {return (width-padding)/2;})
-		.attr("fill", function(d, i) { return color[i]; })
-		.on("mouseover", function(d) {
+		.attr("fill", function(d, i) { return color2[i]; });
+
+	var pop_box_bg = svg3.append("rect")
+						.attr("fill","black")
+						.attr("visibility", "hidden")
+						.attr("height", 19)
+						;
+
+	var pop_box = svg3.append("text")
+					.attr("fill", "white")
+					.attr("text-decoration","underline overline")
+					.attr("font-size","20")
+					.attr("text-anchor", "middle")
+					.attr("visibility", "hidden");
+	
+	circles.on("mouseover", function(d,i) {
 			d3.select(this).attr("transform","scale(1.01) translate(-3.1,-3.1)")
 							// .attr("opacity","0.7")
 							;
+			var id = pops[data.indexOf(d)].id;
+			var xpos = d3.mouse(this)[0]
+			var ypos = d3.mouse(this)[1]
+
+			pop_box.attr("visibility","visible").text(id + " Population: "+ d)
+					.attr("x", xpos)
+					.attr("y", ypos-10);
+
+			bbox = pop_box.node().getBBox();
+			pop_box_bg.attr("visibility","visible")
+					.attr("width", bbox.width)
+					.attr("x", xpos - bbox.width/2)
+					.attr("y", ypos-27);
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).attr("transform","scale(1, 1) translate(0,0)")
 							// .attr("opacity","1")
 							;
+			pop_box.attr("visibility","hidden");
+			pop_box_bg.attr("visibility","hidden");
 		});
 
 	svg3.append("text")

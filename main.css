@@ -20,7 +20,7 @@ h2 {
 	font-size: 42;
 }
 
-#episode_text { position: fixed;}
+#episode_text { position: fixed; }
 
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
@@ -296,9 +296,10 @@ h1
 /***********************Graphics*************************/
 
 .graphics{
-	/*position: static;*/
-	display: block;
+	display: inline-block;
 	right: 1000;
 	top: 1000;
+	text-align: center;
+/*	position: fixed;*/
 }
 
