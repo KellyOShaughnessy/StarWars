@@ -49,29 +49,35 @@
     .attr("width", width)
     .attr("fill", "black");
 
-  var planetInfo1 = svg.append("text").attr("class", "info").attr("x", padding)
-    .attr("y", padding*2)
+  var planetInfo1 = svg.append("text").attr("class", "info").attr("x", width/1.4)
+    .attr("y", height/2.3)
     .attr("fill", "white")
     .attr("visibility", "visible")
 	.style("font-size", "26px");
   
-  var planetInfo2 = svg.append("text").attr("class", "info").attr("x", padding)
-    .attr("y", padding*2.5)
+  var planetInfo2 = svg.append("text").attr("class", "info").attr("x", width/1.4)
+    .attr("y", height/2.2)
     .attr("fill", "white")
     .attr("visibility", "visible")
 	.style("font-size", "26px");
 	
-  var planetInfo3 = svg.append("text").attr("class", "info").attr("x", padding)
-    .attr("y", padding*3)
+  var planetInfo3 = svg.append("text").attr("class", "info").attr("x", width/1.4)
+    .attr("y", height/2.1)
     .attr("fill", "white")
     .attr("visibility", "visible")
 	.style("font-size", "26px");
   
-  var planetInfo4 = svg.append("text").attr("class", "info").attr("x", padding)
-    .attr("y", padding*3.5)
+  var planetInfo4 = svg.append("text").attr("class", "info").attr("x", width/1.4)
+    .attr("y", height/2)
     .attr("fill", "white")
     .attr("visibility", "visible")
 	.style("font-size", "26px");
+  
+  var planetInfo5 = svg.append("text").attr("class", "info").attr("x", width/1.4)
+	.attr("y", height/2.5)
+	.attr("fill", "white")
+	.attr("visibility", "visible")
+	.style("font-size", "42px");
 
 
   d3.csv("planet_info.csv", function(RandCSV) {
@@ -157,6 +163,8 @@
     		 		selected.state = PLANET_STATE.ORBIT;
     		 	selected = d;
     		 	d.state = PLANET_STATE.SELECT;
+				
+				planetInfo5.text(d.id);
 				
 				planetInfo1.text("PLANET TYPE: "+d.type);
 						  
