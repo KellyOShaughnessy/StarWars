@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="main.css">
+	<link rel="import" href="eps.html">
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<title> Ep I </title>
 </head>
@@ -9,15 +10,9 @@
 <!-- Twinkling -->
 <script type="text/javascript" src="main.js"></script>
 
-<div id = "graphics">
-	<script>
-	graphics("I");
-	</script>
-</div>
-
 <div id="episode_text">
 		<u><h2>Episode I</h2></u>
-		<p>Filter planets based on their appearance in Episodes:</p>
+		<p>Filter the galaxy by Episode:</p>
 	<!-- Episode Dropdown -->
 	<div class="dropdown">
 		<button onclick = "drop()" class="dropdown-but" type="button" data-toggle="dropdown">Episode Filter <span class="caret">&#65516;</span></button>
@@ -37,5 +32,12 @@
 	</div>
 	<br>
 </div>
+
+<div id = "graphics">
+	<script>
+	graphics("I");
+	</script>
+</div>
+
 </body>
 </html>

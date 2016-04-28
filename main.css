@@ -22,6 +22,15 @@ h2 {
 
 #episode_text { position: fixed; }
 
+/***********************Graphics*************************/
+
+#graphics {
+	width: 800;
+	height: 600;
+	padding: 0 500;
+	margin: auto;
+}
+
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
 .home, .dropdown { display: inline-block;}
@@ -291,15 +300,5 @@ h1
 	50%  { -moz-transform: scale(1.0); opacity: 1; }
 	75%  { -moz-transform: scale(0.5); opacity: 0; }
 	100% { -moz-transform: scale(1.0); opacity: 1; }
-}
-
-/***********************Graphics*************************/
-
-.graphics{
-	display: inline-block;
-	right: 1000;
-	top: 1000;
-	text-align: center;
-/*	position: fixed;*/
 }
 

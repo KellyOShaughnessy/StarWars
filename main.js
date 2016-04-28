@@ -63,6 +63,13 @@ function graphics(ep) {
 	 	var diams = [];
 	 	var pops = [];
 
+	 	var color2 = ["#26518c", "#5f8fd3", "#c3d5ef",
+				"#a93f0a", "#f4783e","#fbcdb7", 
+				"#298941", "#4fc96e", "#b0e8be",
+				"#3e3e75", "#7979b9", "#cdcde5",
+				"#a11250", "#eb478e", "#f7bbd6",
+				"#595959", "#999999", "#d9d9d9"];
+
 	    RandCSV.forEach(function(planetRow, i) {
 	    	//Get pertinent data
 	      if (planetRow["PLANET"] != null) {
@@ -75,7 +82,8 @@ function graphics(ep) {
 		        	diameter: planetRow["DIAMETER"],
 		        	pop: planetRow["POPULATION"],
 		        	films: planetRow["FILMS (EP)"],
-		        	url: planetRow["IMAGE"]
+		        	url: planetRow["IMAGE"],
+		        	color: color2[i]
 		        });
 			}
 	      }
@@ -96,8 +104,9 @@ function graphics(ep) {
 	    	var id = dataset.planets[i].id;
 	    	var d = dataset.planets[i].diameter;
 	    	var p = dataset.planets[i].pop;
+	    	var c = dataset.planets[i].color;
 
-	    	pops.push({id: id, pop:p});
+	    	pops.push({id: id, pop:p, color:c});
 
 	    	diams.push(d);
 	    	if (d < 12742) { d_counts[0] ++;}
@@ -106,6 +115,7 @@ function graphics(ep) {
 	//Two circle graphics
 
 	var width = 500,
+		full_width = 900,
 	    height = 550,
 	    padding = 0,
 	    radius = Math.min((width-padding)/2, (height-padding)/2) / 2;
@@ -119,17 +129,17 @@ function graphics(ep) {
 	    .innerRadius(radius - 60)
 	    .outerRadius(radius - 10);
 
-	var svg = d3.select("body").append("svg")
-	    .attr("width", width)
+	var svg = d3.select("#graphics").append("svg")
+	    .attr("width", full_width)
 	    .attr("height", height)
 	    .attr("align","center");
 
 	var svg_terrain = svg.append("g")
 					.attr("class","terrain")
-					.attr("transform", "translate(" + (width-padding) / 2 + "," + radius + ")");
+					.attr("transform", "translate(" + (width-padding)/4 + "," + (10+radius) + ")");
 	var svg_diam_earth = svg.append("g")
 					.attr("class","earth")
-					.attr("transform", "translate(" + (width-padding) / 2 + "," + ((height-padding) / 2 + radius) + ")");
+					.attr("transform", "translate(" + (width-padding)/4 + "," + ((height-padding) / 2 + radius+10) + ")");
 
 	//Breakdown of planet terrain type
 	var path = svg_terrain.selectAll("path")
@@ -138,12 +148,25 @@ function graphics(ep) {
 	    .attr("fill", function(d, i) { return color[i]; })
 	    .attr("d", arc);
 
+	// var sum = 0;
+	// var terrain_percents = [];
+	// type_counts.forEach(function(e){sum += e;});
+	// type_counts.forEach(function(e){terrain_percents.push((e/sum)*100 + "%")});
+	// console.log(terrain_percents);
+
+	// svg_terrain.selectAll("text")
+	// 			.data(terrain_percents)
+	// 			.enter()
+	// 			.append("text")
+	// 			.text("9")
+	// 			.attr("d",arc);
+
 	svg_terrain.append("text")
 		.attr("x", 0)
-		.attr("y", radius)
+		.attr("y", radius+10)
 		.attr("fill", "yellow")
-		.attr("font-size","10")
-		.text("planet terrain of planets by %")
+		.attr("font-size","11")
+		.text("Breakdown of planets by terrain")
 		.attr("text-anchor", "middle");
 
 	//smaller or bigger than Earth
@@ -155,24 +178,13 @@ function graphics(ep) {
 
 	svg_diam_earth.append("text")
 		.attr("x", 0)
-		.attr("y", radius)
+		.attr("y", radius+10)
 		.attr("fill", "yellow")
-		.text("% planets smaller/larger than earth")
-		.attr("font-size","10")
+		.text("% planets larger/smaller than Earth")
+		.attr("font-size","11")
 		.attr("text-anchor", "middle");
 
-	//planet population comparison
-
-	var color2 = ["#26518c", "#5f8fd3", "#c3d5ef",
-				"#a93f0a", "#f4783e","#fbcdb7", 
-				"#298941", "#4fc96e", "#b0e8be",
-				"#3e3e75", "#7979b9", "#cdcde5",
-				"#a11250", "#eb478e", "#f7bbd6",
-				"#595959", "#999999", "#d9d9d9"];
-
-	var width = 800, 
-		height = 650,
-		padding = 0;
+	//planet population comparison graphic:
 
 	//extract population data and sort it
 	pops.sort(function(a, b){return b.pop-a.pop});
@@ -184,31 +196,27 @@ function graphics(ep) {
 	var scale = d3.scale.log().domain([1,1000000000000])
 								.range([1,220]);
 
-	console.log(data);
+	var svg_pop = svg.append("g").attr("class","pop")
+					.attr("transform", "translate(" + (full_width-padding) / 3.2 + ",0)");
 
-	var svg3 = d3.select("body").append("svg")
-	    .attr("width", width)
-	    .attr("height", height)
-	    .append("g");
-
-	var circles = svg3.selectAll('.circles')
+	var circles = svg_pop.selectAll('.circles')
 		.data(data)
 		.enter().append('circle')
 		.attr('r', function(d)  { return scale(d);})
 		.attr("cy", (height-padding)/2)
-		.attr("cx", function(d,i) {return (width-padding)/2;})
-		.attr("fill", function(d, i) { return color2[i]; });
+		.attr("cx", (width-padding)/2)
+		.attr("fill", function(d, i) { console.log(pops[data.indexOf(d)].color); return pops[data.indexOf(d)].color; });
 
-	var pop_box_bg = svg3.append("rect")
+	var pop_box_bg = svg_pop.append("rect")
 						.attr("fill","black")
 						.attr("visibility", "hidden")
-						.attr("height", 19)
+						.attr("height", 15)
 						;
 
-	var pop_box = svg3.append("text")
+	var pop_box = svg_pop.append("text")
 					.attr("fill", "white")
 					.attr("text-decoration","underline overline")
-					.attr("font-size","20")
+					.attr("font-size","16")
 					.attr("text-anchor", "middle")
 					.attr("visibility", "hidden");
 	
@@ -228,7 +236,7 @@ function graphics(ep) {
 			pop_box_bg.attr("visibility","visible")
 					.attr("width", bbox.width)
 					.attr("x", xpos - bbox.width/2)
-					.attr("y", ypos-27);
+					.attr("y", ypos-24);
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).attr("transform","scale(1, 1) translate(0,0)")
@@ -238,12 +246,12 @@ function graphics(ep) {
 			pop_box_bg.attr("visibility","hidden");
 		});
 
-	svg3.append("text")
+	svg_pop.append("text")
 		.attr("x", (width-padding)/2)
 		.attr("y", (height-padding)-5)
 		.attr("fill", "yellow")
-		.attr("font-size","10")
-		.text("planet populations")
+		.attr("font-size","14")
+		.text("Planet populations")
 		.attr("text-anchor", "middle");
 	});
 }
