@@ -20,6 +20,8 @@ h2 {
 	font-size: 42;
 }
 
+#episode_text { position: fixed;}
+
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
 .home, .dropdown { display: inline-block;}
@@ -291,11 +293,11 @@ h1
 	100% { -moz-transform: scale(1.0); opacity: 1; }
 }
 
-/*Graphics*/
+/***********************Graphics*************************/
 
 .graphics{
-	position: absolute;
-	/*display: inline-block;*/
+	/*position: static;*/
+	display: block;
 	right: 1000;
 	top: 1000;
 }

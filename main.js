@@ -102,12 +102,11 @@ function graphics(ep) {
 	    	if (d < 12742) { d_counts[0] ++;}
 	    	if (d > 12742) { d_counts[1] ++;}
 	    }
-	    console.log(dataset.planets);
 
 	//Breakdown of planet terrain type
 	var width = 250,
-	    height = 250,
-	    padding = 20,
+	    height = 280,
+	    padding = 0,
 	    radius = Math.min(width-padding, height-padding) / 2;
 
 	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", 
@@ -134,7 +133,7 @@ function graphics(ep) {
 
 	svg.append("text")
 		.attr("x", 0)
-		.attr("y", height/2)
+		.attr("y", (height-10)/2)
 		.attr("fill", "yellow")
 		.attr("font-size","10")
 		.text("planet terrain of planets by %")
@@ -142,8 +141,8 @@ function graphics(ep) {
 
 	//smaller or bigger than Earth
 	var width = 250,
-	    height = 250,
-	    padding = 20,
+	    height = 280,
+	    padding = 0,
 	    radius = Math.min(width-padding, height-padding) / 2;
 
 	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", "#0000cc"];
@@ -169,7 +168,7 @@ function graphics(ep) {
 
 	svg2.append("text")
 		.attr("x", 0)
-		.attr("y", height/2)
+		.attr("y", (height-10)/2)
 		.attr("fill", "yellow")
 		.text("% planets smaller/larger than earth")
 		.attr("font-size","10")
@@ -178,17 +177,17 @@ function graphics(ep) {
 	//planet population comparison
 
 	var color = ["#26518c", "#5f8fd3", "#c3d5ef",
-				"#e6550d", "#f4783e","#fbcdb7", 
-				"#298941", "#000", "#c4edce",
+				"#a93f0a", "#f4783e","#fbcdb7", 
+				"#298941", "#4fc96e", "#b0e8be",
 				"#3e3e75", "#7979b9", "#cdcde5",
 				"#a11250", "#eb478e", "#f7bbd6",
 				"#595959", "#999999", "#d9d9d9"];
 
-	var width = 800, 
-		height = 800,
-		padding = 70;
+	var width = 600, 
+		height = 650,
+		padding = 0;
 
-	var scale = d3.scale.log().domain([1,d3.max(pops)]).range([1,220]);
+	var scale = d3.scale.log().domain([1,d3.max(pops)]).range([1,240]);
 
 	pops.sort(function(a, b){return b-a});
 
@@ -203,10 +202,14 @@ function graphics(ep) {
 		.attr("cx", function(d,i) {return (width-padding)/2;})
 		.attr("fill", function(d, i) { return color[i]; })
 		.on("mouseover", function(d) {
-			d3.select(this).attr("transform","scale(1.15)" );
+			d3.select(this).attr("transform","scale(1.01) translate(-3.1,-3.1)")
+							// .attr("opacity","0.7")
+							;
 		})
 		.on("mouseout", function(d) {
-			d3.select(this).attr("transform","scale(1)");
+			d3.select(this).attr("transform","scale(1, 1) translate(0,0)")
+							// .attr("opacity","1")
+							;
 		});
 
 	svg3.append("text")
