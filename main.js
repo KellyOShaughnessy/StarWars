@@ -208,15 +208,6 @@ function graphics(ep) {
 	    .attr("width", full_width)
 	    .attr("height", height)
 	    .attr("align","center");	
-		
-	svg.append("rect")
-		.attr("x", 0)
-		.attr("y", 40)
-		.attr("width", 120)
-		.attr("height", 220)
-		.style("stroke", "white")
-		.style("stroke-width", 1)
-		.style("fill", "none");
 
 	for (var i = 0; i < color.length; i++) {
 		var y = 55 + i * 200 / 7;
@@ -234,16 +225,7 @@ function graphics(ep) {
 			 .text(terrains[i]);
 	}
 
-
-	svg.append("rect")
-		.attr("x", 0)
-		.attr("y", 400)
-		.attr("width", 135)
-		.attr("height", 60)
-		.style("stroke", "white")
-		.style("stroke-width", 1)
-		.style("fill", "none");
-
+	colors = ["#99ccff","#ccff99"]
 	for (var i = 0; i < 2; i++) {
 		var y = 415 + i * 50 / 2;
 		svg.append("rect")
@@ -251,7 +233,7 @@ function graphics(ep) {
 			 .attr("y", y)
 			 .attr("height", 10)
 			 .attr("width", 10)
-			 .style("fill", color[i]);
+			 .style("fill", colors[i]);
 		svg.append("text")
 			 .attr("x", 24)
 			 .attr("y", y + 10)
@@ -303,7 +285,7 @@ function graphics(ep) {
 	var path = svg_diam_earth.selectAll("path")
 	    .data(pie(d_counts))
 	  	.enter().append("path")
-	    .attr("fill", function(d, i) { return color[i]; })
+	    .attr("fill", function(d, i) { return colors[i]; })
 	    .attr("d", arc)
 	    .style("transform", translation);
 

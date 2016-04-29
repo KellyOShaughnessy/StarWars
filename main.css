@@ -23,13 +23,9 @@ h2 {
 /***********************Graphics*************************/
 #graphics {
 	position: absolute;
-	top: 200;
+	overflow: scroll;
+	top: 125;
 	left: 800;
-
-	/*width: 800;
-	height: 800;*/
-/*	padding: 0 1000;*/
-	/*margin: auto;*/
 }
 
 /*****************DROPDOWN MENU & BUTTONS*****************/
