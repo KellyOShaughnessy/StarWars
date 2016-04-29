@@ -279,7 +279,7 @@ function populate_planets(selectedFilm) {
 	  	planets = [],
 		 	width = 750,
 			height = 750,
-			padding = 60,
+			padding = 65,
 			mid = {
 	      x: width / 2,
 	      y: height / 2

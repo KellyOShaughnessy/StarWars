@@ -21,13 +21,18 @@ h2 {
 }
 
 /***********************Graphics*************************/
-#graphics, #svg {
+#graphics {
+	position: absolute;
+	top: 200;
+	left: 800;
+
 	/*width: 800;
-	height: 800;
-	padding: 0 500;
-	margin: auto;*/
-	display: inline;
+	height: 800;*/
+/*	padding: 0 1000;*/
+	/*margin: auto;*/
 }
+
+#graphics, #svg {display: inline-block;}
 
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
@@ -265,9 +270,9 @@ h1
 	height: 6px; 
 	background: #ffffe6;
 	display: block;
-	position: absolute;
+	position: fixed;
 	z-index: 2;
-	overflow: hidden;
+	overflow: scroll;
 	animation: twinkle 8s linear 0s infinite normal;
 	-webkit-animation: twinkle 8s linear 0s infinite normal;
 	-moz-animation: twinkle 8s linear 0s infinite normal;
@@ -280,9 +285,9 @@ h1
 	height: 2px; 
 	background: #ffffcc;
 	display: block;
-	position: absolute;
+	position: fixed;
 	z-index: 2;
-	overflow: hidden;
+	overflow: scroll;
 }
 .circle_med {
 	border-radius: 50%;
@@ -290,8 +295,8 @@ h1
 	height: 4px; 
 	background: #ffffe6;
 	display: block;
-	position: absolute;
-	overflow: hidden;
+	position: fixed;
+	overflow: scroll;
 	animation: twinkle 4s linear 0s infinite normal;
 	-webkit-animation: twinkle 4s linear 0s infinite normal;
 	-moz-animation: twinkle 4s linear 0s infinite normal;
