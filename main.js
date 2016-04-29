@@ -1,5 +1,60 @@
-// Twinkling Background 
+// d3.legend.js 
+// (C) 2012 ziggy.jonsson.nyc@gmail.com
+// MIT licence
 
+(function() {
+d3.legend = function(g) {
+  g.each(function() {
+    var g= d3.select(this),
+        items = {},
+        svg = d3.select(g.property("nearestViewportElement")),
+        legendPadding = g.attr("data-style-padding") || 5,
+        lb = g.selectAll(".legend-box").data([true]),
+        li = g.selectAll(".legend-items").data([true])
+
+    lb.enter().append("rect").classed("legend-box",true)
+    li.enter().append("g").classed("legend-items",true)
+
+    svg.selectAll("[data-legend]").each(function() {
+        var self = d3.select(this)
+        items[self.attr("data-legend")] = {
+          pos : self.attr("data-legend-pos") || this.getBBox().y,
+          color : self.attr("data-legend-color") != undefined ? self.attr("data-legend-color") : self.style("fill") != 'none' ? self.style("fill") : self.style("stroke") 
+        }
+      })
+
+    items = d3.entries(items).sort(function(a,b) { return a.value.pos-b.value.pos})
+
+    
+    li.selectAll("text")
+        .data(items,function(d) { return d.key})
+        .call(function(d) { d.enter().append("text")})
+        .call(function(d) { d.exit().remove()})
+        .attr("y",function(d,i) { return i+"em"})
+        .attr("x","1em")
+        .text(function(d) { ;return d.key})
+    
+    li.selectAll("circle")
+        .data(items,function(d) { return d.key})
+        .call(function(d) { d.enter().append("circle")})
+        .call(function(d) { d.exit().remove()})
+        .attr("cy",function(d,i) { return i-0.25+"em"})
+        .attr("cx",0)
+        .attr("r","0.4em")
+        .style("fill",function(d) { console.log(d.value.color);return d.value.color})  
+    
+    // Reposition and resize the box
+    var lbbox = li[0][0].getBBox()  
+    lb.attr("x",(lbbox.x-legendPadding))
+        .attr("y",(lbbox.y-legendPadding))
+        .attr("height",(lbbox.height+2*legendPadding))
+        .attr("width",(lbbox.width+2*legendPadding))
+  })
+  return g
+}
+})()
+
+// Twinkling Background 
 body=document.body;
 loop={
 	//initializing stars
@@ -126,25 +181,84 @@ function graphics(ep) {
 	    }
 	//Two circle graphics
 
-	var width = 500,
-		full_width = 900,
-	    height = 550,
-	    padding = 0,
+	var width = 800,
+		full_width = 1200,
+	    height = 750,
+	    padding = 100,
 	    radius = Math.min((width-padding)/2, (height-padding)/2) / 2;
 
 	var color = ["#993300","#ffd633","#339966","#d9d9d9", "#ccffff", "#80b3ff", "#0000cc"];
+	var terrains = ["Terrestrial", "Gas", "Swamp", "Metal", "Ice", "Oceanic", "Urban"]
 
+	    	if (t == "Terrestrial") { type_counts[0] ++; }
+	    	if (t == "Gas") { type_counts[1] ++; }
+	    	if (t == "Swamp") { type_counts[2] ++; }
+	    	if (t == "Metal") { type_counts[3] ++;}
+	    	if (t == "Ice") { type_counts[4] ++;}
+	    	if (t == "Oceanic") { type_counts[5] ++;}
+	    	if (t == "Urban") { type_counts[6] ++;}
 	var pie = d3.layout.pie()
 	    .sort(null);
 
 	var arc = d3.svg.arc()
-	    .innerRadius(radius - 60)
-	    .outerRadius(radius - 10);
+	    .innerRadius(radius - 20)
+	    .outerRadius(radius - 50);
 
 	var svg = d3.select("#graphics").append("svg")
 	    .attr("width", full_width)
 	    .attr("height", height)
-	    .attr("align","center");
+	    .attr("align","center");	
+		
+	svg.append("rect")
+		.attr("x", 0)
+		.attr("y", 40)
+		.attr("width", 120)
+		.attr("height", 220)
+		.style("stroke", "white")
+		.style("stroke-width", 1)
+		.style("fill", "none");
+
+	for (var i = 0; i < color.length; i++) {
+		var y = 55 + i * 200 / 7;
+		svg.append("rect")
+			 .attr("x", 10)
+			 .attr("y", y)
+			 .attr("height", 10)
+			 .attr("width", 10)
+			 .style("fill", color[i]);
+		svg.append("text")
+			 .attr("x", 24)
+			 .attr("y", y + 10)
+			 .style("fill", "white")
+			 .style("font-size", 12)
+			 .text(terrains[i]);
+	}
+
+
+	svg.append("rect")
+		.attr("x", 0)
+		.attr("y", 400)
+		.attr("width", 135)
+		.attr("height", 60)
+		.style("stroke", "white")
+		.style("stroke-width", 1)
+		.style("fill", "none");
+
+	for (var i = 0; i < 2; i++) {
+		var y = 415 + i * 50 / 2;
+		svg.append("rect")
+			 .attr("x", 10)
+			 .attr("y", y)
+			 .attr("height", 10)
+			 .attr("width", 10)
+			 .style("fill", color[i]);
+		svg.append("text")
+			 .attr("x", 24)
+			 .attr("y", y + 10)
+			 .style("fill", "white")
+			 .style("font-size", 12)
+			 .text((i == 0 ? "Greater " : "Less ") + "than Earth");
+	}
 
 	var svg_terrain = svg.append("g")
 					.attr("class","terrain")
@@ -153,12 +267,16 @@ function graphics(ep) {
 					.attr("class","earth")
 					.attr("transform", "translate(" + (width-padding)/4 + "," + ((height-padding) / 2 + radius+10) + ")");
 
+	var translation = "translate(100px,0px)";
+
 	//Breakdown of planet terrain type
 	var path = svg_terrain.selectAll("path")
 	    .data(pie(type_counts))
 	  	.enter().append("path")
+	  	.attr("x", padding)
 	    .attr("fill", function(d, i) { return color[i]; })
-	    .attr("d", arc);
+	    .attr("d", arc)
+	    .style("transform", translation);
 
 	// var sum = 0;
 	// var terrain_percents = [];
@@ -179,14 +297,15 @@ function graphics(ep) {
 		.attr("fill", "yellow")
 		.attr("font-size","11")
 		.text("Breakdown of planets by terrain")
-		.attr("text-anchor", "middle");
-
+		.attr("text-anchor", "middle")
+	  .style("transform", translation);;
 	//smaller or bigger than Earth
 	var path = svg_diam_earth.selectAll("path")
 	    .data(pie(d_counts))
 	  	.enter().append("path")
 	    .attr("fill", function(d, i) { return color[i]; })
-	    .attr("d", arc);
+	    .attr("d", arc)
+	    .style("transform", translation);
 
 	svg_diam_earth.append("text")
 		.attr("x", 0)
@@ -194,7 +313,8 @@ function graphics(ep) {
 		.attr("fill", "yellow")
 		.text("% planets larger/smaller than Earth")
 		.attr("font-size","11")
-		.attr("text-anchor", "middle");
+		.attr("text-anchor", "middle")
+	  .style("transform", translation);	
 
 	//planet population comparison graphic:
 
@@ -258,14 +378,14 @@ function graphics(ep) {
 			pop_box_bg.attr("visibility","hidden");
 		});
 
-	svg_pop.append("text")
-		.attr("x", (width-padding)/2)
-		.attr("y", (height-padding)-5)
-		.attr("fill", "yellow")
-		.attr("font-size","14")
-		.text("Planet populations")
-		.attr("text-anchor", "middle");
-	});
+		svg_pop.append("text")
+			.attr("x", (width-padding)/2)
+			.attr("y", (height-padding)-5)
+			.attr("fill", "yellow")
+			.attr("font-size","14")
+			.text("Planet populations")
+			.attr("text-anchor", "middle");
+		});
 }
 
 function populate_planets(selectedFilm) {
