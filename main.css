@@ -21,32 +21,48 @@ h2 {
 }
 
 /***********************Graphics*************************/
-
-#graphics {
-	width: 800;
-	height: 4000;
+#graphics, #svg {
+	/*width: 800;
+	height: 800;
 	padding: 0 500;
-	margin: auto;
+	margin: auto;*/
+	display: inline;
 }
 
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
 .home, .dropdown { display: inline-block;}
 
-.escape-but {
+.escape {
 	position: relative;
-	top: 10px;
-	left: 30px;
+	text-align: center;
+	margin: auto;
+	padding: 0;
+	width: 200;
 }
 
-.dropdown-but, .escape-but , .home-but  {
+.escape-but {
+	background-color: white;
+	padding: 30px 50px;
+	border: none;
+	cursor: pointer;
+	font-size: 42;
+}
+
+.escape-but a {
+	text-decoration: none;
+	font-size: 42;
+	color: black;
+}
+
+.dropdown-but, .home-but  {
 	background-color: white;
 	padding: 12px 12px;
 	border: none;
 	cursor: pointer;
 }
 
-.home-but a, .escape-but a, .dropdown-but a {
+.home-but a, .dropdown-but a {
 	text-decoration: none;
 	font-size: 12;
 	color: black;
@@ -167,7 +183,7 @@ h1
 #titles
 {
 	position: absolute;
-	height: 900px;
+	height: 1000px;
 	width: 80%;
 	bottom: 90%;
 	top: -38%;
@@ -180,11 +196,11 @@ h1
 	-ms-transform-origin: 50% 100%;
 	-o-transform-origin: 50% 100%;
 	transform-origin: 50% 100%;
-	-webkit-transform: perspective(300px) rotateX(25deg);
-	-moz-transform: perspective(300px) rotateX(25deg);
-	-ms-transform: perspective(300px) rotateX(25deg);
-	-o-transform: perspective(300px) rotateX(25deg);
-	transform: perspective(300px) rotateX(25deg);
+	-webkit-transform: perspective(300px) rotateX(18deg);
+	-moz-transform: perspective(300px) rotateX(18deg);
+	-ms-transform: perspective(300px) rotateX(18deg);
+	-o-transform: perspective(300px) rotateX(18deg);
+	transform: perspective(300px) rotateX(18deg);
 }
 
 #titles p
