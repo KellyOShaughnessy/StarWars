@@ -65,6 +65,7 @@ window.onclick = function(event) {
 //Additional Graphics
 
 function graphics(ep) {
+	console.log("EP: " + ep)
 	d3.csv("planet_info.csv", function(RandCSV) {
 	 	var dataset = {planets:[]};
 	 	var type_counts = [0,0,0,0,0,0,0];
@@ -82,9 +83,11 @@ function graphics(ep) {
 	    RandCSV.forEach(function(planetRow, i) {
 	    	//Get pertinent data
 	      if (planetRow["PLANET"] != null) {
-	      	var episodes = planetRow["FILMS (EP)"].split(",");
+	      	var episodes = planetRow["FILMS (EP)"].split(",").map(function(x) { return +x; });
+	      	console.log(episodes);
 	      	//planet in this episode; ep = 0 if all episodes
-	      	if (ep == 0 || episodes.indexOf(ep) != -1) {
+	      	if (ep == 0 || episodes.includes(ep)) {
+	      		console.log(ep + " " + episodes)
 		        dataset.planets.push({
 		        	id: planetRow["PLANET"],
 		        	type: planetRow["TYPE"],
@@ -274,8 +277,8 @@ function populate_planets(selectedFilm) {
 
 	var t0 = Date.now(),
 	  	planets = [],
-		 	width = 2000,
-			height = 2000,
+		 	width = 750,
+			height = 750,
 			padding = 50,
 			mid = {
 	      x: width / 2,
@@ -293,47 +296,51 @@ function populate_planets(selectedFilm) {
 	  .attr("y", height/2.3)
 	  .attr("fill", "white")
 	  .attr("visibility", "visible")
-	.style("font-size", "26px");
+	.style("font-size", "12px");
 
 	var planetInfo2 = svg.append("text").attr("class", "info").attr("x", width/1.4)
 	  .attr("y", height/2.2)
 	  .attr("fill", "white")
 	  .attr("visibility", "visible")
-	.style("font-size", "26px");
+	.style("font-size", "12px");
 
 	var planetInfo3 = svg.append("text").attr("class", "info").attr("x", width/1.4)
 	  .attr("y", height/2.1)
 	  .attr("fill", "white")
 	  .attr("visibility", "visible")
-	.style("font-size", "26px");
+	.style("font-size", "12px");
 
 	var planetInfo4 = svg.append("text").attr("class", "info").attr("x", width/1.4)
 	  .attr("y", height/2)
 	  .attr("fill", "white")
 	  .attr("visibility", "visible")
-	.style("font-size", "26px");
+	.style("font-size", "12px");
 
 	var planetInfo5 = svg.append("text").attr("class", "info").attr("x", width/1.4)
 	.attr("y", height/2.5)
 	.attr("fill", "white")
 	.attr("visibility", "visible")
-	.style("font-size", "42px");
+	.style("font-size", "30px");
 
 
-	d3.csv("planet_info.csv", function(planetsCsv) {
+	d3.csv("planet_info.csv", function(planetsCSV) {
 
 	  var orbitSpeedScale = d3.scale.linear().domain([0,1]).range([.5,.9]);
-	  		orbitScale 			= d3.scale.pow().domain([0,1]).range([50, 750])
+	  		orbitScale 			= d3.scale.linear().domain([0,1]).range([padding, width - padding - mid.x]),
+	  		radiusScale			= d3.scale.log().domain(d3.extent(planetsCSV, function(x) {
+	  			return Number(x["DIAMETER"]);
+	  		})).range([25,100]);
 
-	  planetsCsv.forEach(function(planetRow, i) {
+	  planetsCSV.forEach(function(planetRow, i) {
 	    if (planetRow["PLANET"] != null && planetRow["PLANET"] != "Earth") {
 	    	var films = planetRow["FILMS (EP)"].split(',').map(function(x) { return +x; });
 	    	if (selectedFilm == 0 || films.includes(selectedFilm)) {
 	    		var orbit = orbitScale(Math.random());
+	    		console.log(orbit);
 		      planets.push({
 		        orbitSpeed: orbitSpeedScale(Math.random()),
 		        orbit: orbit,
-		        radius: 100, //EDIT: 25
+		        radius: radiusScale(Number(planetRow["DIAMETER"])),
 		        delta: orbit * 50,
 		        state: PLANET_STATE.ORBIT,
 		        opacity: 1,
@@ -352,31 +359,30 @@ function populate_planets(selectedFilm) {
 	  var planetName = svg.append("text")
 	  	.attr("x", padding).attr("y", padding)
 	  	.style("fill", "white")
-	  	.style("font-size", "50")
-	  	.attr("visibility", "hidden");
+	  	.style("font-size", "26px")
+	  	.attr("visibility", "hidden")
 
 	  svg.selectAll("circle").data(planets)
-	  	 .enter()
-	  	 .append("circle")
-	  	 .attr("class", "orbit")
-	  	 .attr("cx", mid.x)
-	  	 .attr("cy", mid.y)
-		   .style("vertical-align", "middle")
-		   .style("text-align", "center")
-		   .attr("r", function(d) {
-		   	return d.orbit + d.radius / 2;
-		   })
-		   .style("fill", "none")
-		   .style("stroke", "white")
-		   .style("stroke-width", 4)
-		   .style("opacity", 0.2);
+  	  .enter()
+  	  .append("circle")
+  	  .attr("class", "orbit")
+  	  .attr("cx", mid.x)
+  	  .attr("cy", mid.y)
+	    .style("vertical-align", "middle")
+	    .style("text-align", "center")
+	    .attr("r", function(d) {
+		 		return d.orbit + d.radius / 2;
+		  })
+		  .style("fill", "none")
+		  .style("stroke", "white")
+		  .style("stroke-width", 4)
+		  .style("opacity", 0.2);
 
 	  svg.selectAll("image").data(planets)
 	    .enter()
 	    .append("image")
 	    .attr("class", "planet")
 	    .attr("id", planets.id)
-	    //.attr("r", 20)  //radius is scaled populationSize
 	    .style("vertical-align", "middle")
 	    .style("text-align", "center")
 	    .attr("height", function(d) {
@@ -424,7 +430,7 @@ function populate_planets(selectedFilm) {
 				
 					planetInfo5.text(d.id);
 					planetInfo1.text("PLANET TYPE: "+d.type);
-					planetInfo2.text("SIZE: "+d.size+" km")
+					planetInfo2.text("DIAMETER: "+d.size+" km")
 					planetInfo3.text("CLIMATE: "+d.climate)
 					planetInfo4.text("POPULATION: "+d.population);
 					d3.selectAll(".info").attr("visibility", "visible");
