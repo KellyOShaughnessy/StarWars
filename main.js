@@ -425,6 +425,17 @@ function populate_planets(selectedFilm) {
 	.style("font-size", "30px");
 
 
+	var img_size = 100;
+
+  svg.append("image")
+	  .attr("x", mid.x - img_size / 2)
+	  .attr("y", mid.y - img_size / 2)
+	  .attr("height", img_size)
+	  .attr("width", img_size)
+    .style("vertical-align", "middle")
+    .style("text-align", "center")
+    .attr("xlink:href", "img/jarjar.svg");
+
 	d3.csv("planet_info.csv", function(planetsCSV) {
 
 	  var orbitSpeedScale = d3.scale.linear().domain([0,1]).range([.5,.9]);
