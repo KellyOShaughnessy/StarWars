@@ -2,7 +2,7 @@
 
 body=document.body;
 loop={
-	//initilizeing stars
+	//initializing stars
 	start:function(){
 		for (var i=0; i <= 300; i++) {
 			var star=this.newStar();
@@ -322,7 +322,7 @@ function populate_planets(selectedFilm) {
 
 	d3.csv("planet_info.csv", function(planetsCsv) {
 
-	  var orbitSpeedScale = d3.scale.linear().domain([0,1]).range([.2,.7]);
+	  var orbitSpeedScale = d3.scale.linear().domain([0,1]).range([.5,.9]);
 	  		orbitScale 			= d3.scale.pow().domain([0,1]).range([50, 750])
 
 	  planetsCsv.forEach(function(planetRow, i) {
@@ -468,7 +468,7 @@ function populate_planets(selectedFilm) {
 	      .attr("y", function(d) {
 	      	return d.state != PLANET_STATE.SELECT ? mid.y : mid.y - height / 5;
 	      })
-	      .duration(200);
+	      .duration(130);
 
         svg.selectAll(".orbit").attr("visibility", selected == null ? "visible" : "hidden");
 	  });
