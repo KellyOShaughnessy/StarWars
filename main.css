@@ -32,8 +32,6 @@ h2 {
 	/*margin: auto;*/
 }
 
-#graphics, #svg {display: inline-block;}
-
 /*****************DROPDOWN MENU & BUTTONS*****************/
 
 .home, .dropdown { display: inline-block;}
