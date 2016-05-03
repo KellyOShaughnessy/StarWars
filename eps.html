@@ -1,0 +1,50 @@
+<html>
+<head>
+	<link rel="stylesheet" href="main.css">
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<title> All Episodes </title>
+</head>
+<body>
+
+<!-- Twinkling -->
+<script type="text/javascript" src="main.js"></script>
+
+<div id="episode_text">
+	<u><h2>Episodes I-VI</h2></u>
+	<p>Filter the galaxy by Episode:</p>
+
+	<!-- Episode Dropdown -->
+	<div class="dropdown">
+		<button onclick = "drop()" class="dropdown-but" type="button" data-toggle="dropdown">Episode Filter <span class="caret">&#65516;</span></button>
+		<div id ="myDropdown" class="dropdown-content">
+			<a href="eps.html">Episodes I-VI</a>
+	     	<a href="ep1.html">Episode I</a>
+	     	<a href="ep2.html">Episode II</a>
+	     	<a href="ep3.html">Episode III</a>
+	     	<a href="ep4.html">Episode IV</a>
+	     	<a href="ep5.html">Episode V</a>
+	     	<a href="ep6.html">Episode VI</a>
+	    </div>
+	</div>
+	<!-- Back to Homepage Button -->
+	<div class="home">
+		<button class="home-but" type="button"><a href="index.html">Back to homepage</a></button>
+	</div>
+	<br>
+</div>
+
+<div id = "graphics">
+	<script>
+	graphics(0);
+	</script>
+</div>
+
+<div id="svg">
+	<script>
+	populate_planets(0);
+	</script>
+</div>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,316 @@
+/*Kelly O'Shaughnessy
+Adi Bodas
+Ernes Railey*/
+
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+body, html
+{
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	font-family: "Droid Sans", arial, verdana, sans-serif;
+	font-weight: 700;
+	color: #ff6;
+	overflow: scroll;
+	margin: 5;
+}
+
+h2 { 
+	color: white; 
+	font-size: 42;
+}
+
+/***********************Graphics*************************/
+#graphics {
+	position: absolute;
+	overflow: scroll;
+	top: 125;
+	left: 850;
+}
+
+/*****************DROPDOWN MENU & BUTTONS*****************/
+
+.home, .dropdown { display: inline-block;}
+
+.escape {
+	position: relative;
+	text-align: center;
+	margin: auto;
+	padding: 0;
+	width: 200;
+}
+
+.escape-but {
+	background-color: white;
+	padding: 30px 50px;
+	border: none;
+	cursor: pointer;
+	font-size: 42;
+}
+
+.escape-but a {
+	text-decoration: none;
+	font-size: 42;
+	color: black;
+}
+
+.dropdown-but, .home-but  {
+	background-color: white;
+	padding: 12px 12px;
+	border: none;
+	cursor: pointer;
+}
+
+.home-but a, .dropdown-but a {
+	text-decoration: none;
+	font-size: 12;
+	color: black;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #ccc;
+	margin: 5;
+}
+
+.dropdown-content a{
+	display: block;
+	color: black;
+	text-decoration: none;
+	font-size: 12;
+	padding: 10px 10px;
+}
+
+.dropdown-but:hover, .dropdown-but:focus, .escape-but:hover, .home-but:hover {
+	background-color: yellow;
+}
+
+.dropdown, .home {
+	position: relative;
+}
+
+.show { display:block; }
+
+/*****************SCROLLING TEXT*****************/
+
+/* Credit to Craig Buckler for scrolling text
+** http://www.sitepoint.com/css3-starwars-scrolling-text/ */
+
+@-webkit-keyframes intro {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@-moz-keyframes intro {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@-ms-keyframes intro {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@-o-keyframes intro {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@keyframes intro {
+	0% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+h1
+{
+	position: absolute;
+	width: 2.6em;
+	left: 50%;
+	font-size: 10em;
+	text-align: center;
+	margin-left: -1.3em;
+	line-height: 0.8em;
+	letter-spacing: -0.05em;
+	color: #000;
+	text-shadow: -2px -2px 0 #ff6, 2px -2px 0 #ff6, -2px 2px 0 #ff6, 2px 2px 0 #ff6;
+	opacity: 0;
+	z-index: 1;
+	-webkit-animation: logo 5s ease-out 1s;
+	-moz-animation: logo 5s ease-out 1s;
+	-ms-animation: logo 5s ease-out 1s;
+	-o-animation: logo 5s ease-out 1s;
+	animation: logo 5s ease-out 1s;
+}
+
+@-webkit-keyframes logo {
+	0% { -webkit-transform: scale(1); opacity: 1; }
+	50% { opacity: 1; }
+	100% { -webkit-transform: scale(0.1); opacity: 0; }
+}
+
+@-moz-keyframes logo {
+	0% { -moz-transform: scale(1); opacity: 1; }
+	50% { opacity: 1; }
+	100% { -moz-transform: scale(0.1); opacity: 0; }
+}
+
+@-ms-keyframes logo {
+	0% { -ms-transform: scale(1); opacity: 1; }
+	50% { opacity: 1; }
+	100% { -ms-transform: scale(0.1); opacity: 0; }
+}
+
+@-o-keyframes logo {
+	0% { -o-transform: scale(1); opacity: 1; }
+	50% { opacity: 1; }
+	100% { -o-transform: scale(0.1); opacity: 0; }
+}
+
+@keyframes logo {
+	0% { transform: scale(1); opacity: 1; }
+	50% { opacity: 1; }
+	100% { transform: scale(0.1); opacity: 0; }
+}
+
+/* 3D scrolling */
+#titles
+{
+	position: absolute;
+	height: 1000px;
+	width: 80%;
+	bottom: 90%;
+	top: -38%;
+	left: 10%;
+	font-size: 350%;
+	text-align: justify;
+	overflow: hidden;
+	-webkit-transform-origin: 50% 100%;
+	-moz-transform-origin: 50% 100%;
+	-ms-transform-origin: 50% 100%;
+	-o-transform-origin: 50% 100%;
+	transform-origin: 50% 100%;
+	-webkit-transform: perspective(300px) rotateX(18deg);
+	-moz-transform: perspective(300px) rotateX(18deg);
+	-ms-transform: perspective(300px) rotateX(18deg);
+	-o-transform: perspective(300px) rotateX(18deg);
+	transform: perspective(300px) rotateX(18deg);
+}
+
+#titles p
+{
+	text-align: justify;
+	margin: 0.8em 0;
+}
+
+#titles p.center
+{
+	text-align: center;
+}
+
+#titles a
+{
+	color: #ff6;
+	text-decoration: underline;
+}
+
+#titlecontent
+{
+	position: absolute;
+	top: 100%;
+	-webkit-animation: scroll 40s linear 4s ;
+	-moz-animation: scroll 40s linear 4s ;
+	-ms-animation: scroll 40s linear 4s ;
+	-o-animation: scroll 40s linear 4s ;
+	animation: scroll 40s linear 4s ;
+}
+
+/* animation */
+@-webkit-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-moz-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-ms-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@-o-keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+@keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -170%; }
+}
+
+/*****************TWINKLING STARS*****************/
+
+.circle_big {
+	border-radius: 50%;
+	width: 6px;
+	height: 6px; 
+	background: #ffffe6;
+	display: block;
+	position: fixed;
+	z-index: 2;
+	overflow: scroll;
+	animation: twinkle 8s linear 0s infinite normal;
+	-webkit-animation: twinkle 8s linear 0s infinite normal;
+	-moz-animation: twinkle 8s linear 0s infinite normal;
+	-ms-animation: twinkle 8s linear 0s infinite normal;
+	-o-animation: twinkle 8s linear 0s infinite normal;
+}
+.circle_small {
+	border-radius: 50%;
+	width: 2px;
+	height: 2px; 
+	background: #ffffcc;
+	display: block;
+	position: fixed;
+	z-index: 2;
+	overflow: scroll;
+}
+.circle_med {
+	border-radius: 50%;
+	width: 4px;
+	height: 4px; 
+	background: #ffffe6;
+	display: block;
+	position: fixed;
+	overflow: scroll;
+	animation: twinkle 4s linear 0s infinite normal;
+	-webkit-animation: twinkle 4s linear 0s infinite normal;
+	-moz-animation: twinkle 4s linear 0s infinite normal;
+	-ms-animation: twinkle 4s linear 0s infinite normal;
+	-o-animation: twinkle 4s linear 0s infinite normal;
+	}
+
+	/*css3 keyframes for glittering effect*/
+@-webkit-keyframes twinkle {
+	0%   { -webkit-transform: scale(1.0); opacity: 1; }
+	25%  { -webkit-transform: scale(0.5); opacity: 0; }
+	50%  { -webkit-transform: scale(1.0); opacity: 1; }
+	75%  { -webkit-transform: scale(0.5); opacity: 0; }
+	100% { -webkit-transform: scale(1.0); opacity: 1; }
+}
+@-moz-keyframes twinkle {
+	0%   { -moz-transform: scale(1.0); opacity: 1; }
+	25%  { -moz-transform: scale(0.5); opacity: 0; }
+	50%  { -moz-transform: scale(1.0); opacity: 1; }
+	75%  { -moz-transform: scale(0.5); opacity: 0; }
+	100% { -moz-transform: scale(1.0); opacity: 1; }
+}
+
